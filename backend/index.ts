@@ -35,7 +35,7 @@ async function dbConnect() {
     await connect(dbUrl)
     console.log('DB connected');
 }
-
+dbConnect()
 app.use('/auth', authRoute)
 app.use('/user', usersRoute);
 app.use('/chat', chatRoute)
@@ -43,8 +43,6 @@ app.get('/', (req: Request, res: Response) => {
     res.send('messaging app api');
 });
 
-await dbConnect().then(()=>{
-    app.listen(3000, () => {
-        console.log(`Server is running`);
-    })
+app.listen(3000, () => {
+    console.log(`Server is running`);
 })
