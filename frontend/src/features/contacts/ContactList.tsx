@@ -85,12 +85,11 @@ const ContactList = () => {
                 <div className="contact-requests_header">
                     Contact Requests
                 </div>
-                {requests.length > 0 ? (
+                {
                     requests.map((contact, index) => (
                         <ContactRequest contact={contact} key={index} />
-                    ))) : (
-                    <p className="chat-info mobile">Add a new contact with the button below</p>
-                )
+                    ))
+
                 }
             </div>
         </>
@@ -102,6 +101,18 @@ const ContactList = () => {
             contactsList.push(chat)
         })
     }
+
+    const chatList = contactsList.length > 0 ?
+        (
+            contactsList.map((chat, index) => {
+                if (chat.chatId === currentUrl) {
+                    return <Contact chatId={chat.chatId} lastMessage={chat.lastMessage} targetUser={chat.targetUser} key={index} activeContact={true} />
+                } else {
+                    return <Contact chatId={chat.chatId} lastMessage={chat.lastMessage} targetUser={chat.targetUser} key={index} />
+                }
+            })
+        ) : <p className="chat-info mobile">Add a new contact with the button below</p>
+
 
     const isActiveMobile = (currentUrl === null || currentUrl === '' || currentUrl === '/') ? 'sidebar-active' : null
     if (!isLoading) {
@@ -122,15 +133,7 @@ const ContactList = () => {
                     </ul>
                 </div>
                 <div className="contact-list">
-                    {
-                        contactsList.map((chat, index) => {
-                            if (chat.chatId === currentUrl) {
-                                return <Contact chatId={chat.chatId} lastMessage={chat.lastMessage} targetUser={chat.targetUser} key={index} activeContact={true} />
-                            } else {
-                                return <Contact chatId={chat.chatId} lastMessage={chat.lastMessage} targetUser={chat.targetUser} key={index} />
-                            }
-                        })
-                    }
+                    {chatList}
                 </div>
                 {RequestsList}
                 <AddContact />
