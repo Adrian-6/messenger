@@ -36,7 +36,7 @@ const authWithGoogle = async (req: Express.Request, res: Express.Response) => {
                 grant_type,
             }
         });
-
+    console.log('data: ', data)
         const tokenFromGoogle = data.access_token;
         const urlForGettingUserInfo = 'https://openidconnect.googleapis.com/v1/userinfo';
 
@@ -49,7 +49,8 @@ const authWithGoogle = async (req: Express.Request, res: Express.Response) => {
         });
 
         let userEmail = userData.data.email
-        let foundUser = await User.findOne({ email: userEmail }, '-__v -refreshToken')
+        let foundUser
+        foundUser = await User.findOne({ email: userEmail }, '-__v -refreshToken')
 
         if (!foundUser) {
             await User.create({
@@ -70,11 +71,11 @@ const authWithGoogle = async (req: Express.Request, res: Express.Response) => {
         const idToken = data.id_token
         const userId = foundUser._id
         console.log('id token: ', idToken, 'userId: ', userId)
-        res.cookie('idToken', idToken, { maxAge: 24 * 60 * 60 * 1000 }) //24 hours
-        res.cookie('access_token', tokenFromGoogle, {maxAge: 24 * 60 * 60 * 1000 }) //24 hours
-        res.cookie('user_id', userId, { maxAge: 30 * 24 * 60 * 60 * 1000 }) //1 month
+        res.cookie('idToken', idToken, { httpOnly: true, secure: true, sameSite: 'none',  maxAge: 24 * 60 * 60 * 1000 }) //24 hours
+        res.cookie('access_token', tokenFromGoogle, { httpOnly: true, secure: true, sameSite: 'none', maxAge: 24 * 60 * 60 * 1000 }) //24 hours
+        res.cookie('user_id', userId, { httpOnly: true, secure: true, sameSite: 'none',  maxAge: 30 * 24 * 60 * 60 * 1000 }) //1 month
         const { username, contacts, avatar, email, id } = foundUser
-        console.log(foundUser)
+        console.log('found user: '. foundUser)
         res.json(foundUser);
         
     } catch (err: any) {
