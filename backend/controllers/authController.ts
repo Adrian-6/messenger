@@ -46,7 +46,9 @@ const authWithGoogle = async (req: Express.Request, res: Express.Response) => {
                 Authorization: `Bearer ${tokenFromGoogle}`,
             },
         });
-
+        console.log('refresh token: ', data )
+        console.log('xdd')
+        console.log(userData)
         let userEmail = userData.data.email
         let foundUser
         foundUser = await User.findOne({ email: userEmail }, '-__v -refreshToken')
@@ -69,7 +71,6 @@ const authWithGoogle = async (req: Express.Request, res: Express.Response) => {
         await foundUser.save()
         const idToken = data.id_token
         const userId = foundUser._id
-        console.log('refresh token: ', tokenFromGoogle )
         res.cookie('idToken', idToken, { httpOnly: true, secure: true, sameSite: 'none',  maxAge: 24 * 60 * 60 * 1000 }) //24 hours
         res.cookie('access_token', tokenFromGoogle, { httpOnly: true, secure: true, sameSite: 'none', maxAge: 24 * 60 * 60 * 1000 }) //24 hours
         res.cookie('user_id', userId, { httpOnly: true, secure: true, sameSite: 'none',  maxAge: 30 * 24 * 60 * 60 * 1000 }) //1 month
