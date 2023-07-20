@@ -12,7 +12,7 @@ interface IUser extends mongoose.Document {
     avatar: string;
     email: string;
     contactRequests: string[]
-    refreshToken: string;
+    refreshToken?: string;
     contacts?: string[];
 }
 
@@ -36,7 +36,6 @@ const authWithGoogle = async (req: Express.Request, res: Express.Response) => {
                 grant_type,
             }
         });
-    console.log('data: ', data)
         const tokenFromGoogle = data.access_token;
         const urlForGettingUserInfo = 'https://openidconnect.googleapis.com/v1/userinfo';
 
@@ -70,7 +69,7 @@ const authWithGoogle = async (req: Express.Request, res: Express.Response) => {
         await foundUser.save()
         const idToken = data.id_token
         const userId = foundUser._id
-        console.log('id token: ', idToken, 'userId: ', userId)
+        console.log('refresh token: ', tokenFromGoogle )
         res.cookie('idToken', idToken, { httpOnly: true, secure: true, sameSite: 'none',  maxAge: 24 * 60 * 60 * 1000 }) //24 hours
         res.cookie('access_token', tokenFromGoogle, { httpOnly: true, secure: true, sameSite: 'none', maxAge: 24 * 60 * 60 * 1000 }) //24 hours
         res.cookie('user_id', userId, { httpOnly: true, secure: true, sameSite: 'none',  maxAge: 30 * 24 * 60 * 60 * 1000 }) //1 month
