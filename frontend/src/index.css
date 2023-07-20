@@ -536,7 +536,7 @@ div.menu-notActive {
     max-width: 85%;
   }
 
-  @media screen and (width >=768px) {
+  @media screen and (width > 767px) {
     .mobile {
       display: none
     }
