@@ -535,10 +535,9 @@ div.menu-notActive {
   .message {
     max-width: 85%;
   }
-
-  @media screen and (width > 767px) {
-    .mobile {
-      display: none
-    }
+}
+@media screen and (width > 767px) {
+  .mobile {
+    display: none
   }
 }
