@@ -94,7 +94,10 @@ const Chat = () => {
     })
     ) : null
 
-    if (currentUrl === '' || null || undefined || currentUrl === 'chat') return <></>
+    if (currentUrl === '' || null || undefined || currentUrl === 'chat') return (
+        <div className="chat-area">
+            <p>Select chat or start a new conversation</p>
+        </div>)
     if (isLoading) return <Loading />
     if (error) {
         throw new Error('Chat not found')
