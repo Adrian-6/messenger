@@ -111,7 +111,7 @@ const ContactList = () => {
                     return <Contact chatId={chat.chatId} lastMessage={chat.lastMessage} targetUser={chat.targetUser} key={index} />
                 }
             })
-        ) : <p className="chat-info mobile">Add a new contact with the button below</p>
+        ) : <p className="chat-info mobile">Add a new contact using the button at the bottom</p>
 
 
     const isActiveMobile = (currentUrl === null || currentUrl === '' || currentUrl === '/') ? 'sidebar-active' : null
