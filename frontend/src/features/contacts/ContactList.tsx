@@ -85,7 +85,7 @@ const ContactList = () => {
                 <div className="contact-requests_header">
                     Contact Requests
                 </div>
-                {requests ? (
+                {requests.length > 0 ? (
                     requests.map((contact, index) => (
                         <ContactRequest contact={contact} key={index} />
                     ))) : (

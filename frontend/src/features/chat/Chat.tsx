@@ -96,7 +96,7 @@ const Chat = () => {
 
     if (currentUrl === '' || null || undefined || currentUrl === 'chat') return (
         <div className="chat-info desktop">
-            <p className="chat-area_info">Select chat or start a new conversation</p>
+            <p>Select chat or start a new conversation</p>
         </div>
     )
     if (isLoading) return <Loading />
