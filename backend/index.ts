@@ -1,7 +1,7 @@
+import 'dotenv/config';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import 'dotenv/config';
 import express, { Express, Request, Response } from 'express';
 import { connect } from 'mongoose';
 import { authRoute } from './routes/authRoutes';
@@ -20,7 +20,6 @@ const corsConfig = {
 app.use(cors(corsConfig))
 
 app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }));
-app.use(cookieParser())
 
 app.use((req, res, next) => {
     res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE, PATCH');
@@ -28,25 +27,24 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(cookieParser())
+
 async function dbConnect() {
     let dbUrl = process.env.DATABASE_URL as string
     // 4. Connect to MongoDB
     await connect(dbUrl)
-
     console.log('DB connected');
 }
-dbConnect()
 
 app.use('/auth', authRoute)
-
 app.use('/user', usersRoute);
-
 app.use('/chat', chatRoute)
-
 app.get('/', (req: Request, res: Response) => {
     res.send('messaging app api');
 });
 
-app.listen(3000, () => {
-    console.log(`Server is running`);
-});
+await dbConnect().then(()=>{
+    app.listen(3000, () => {
+        console.log(`Server is running`);
+    })
+})
