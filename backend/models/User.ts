@@ -4,7 +4,7 @@ import mongoose, { Schema, model } from 'mongoose';
 interface IUser extends mongoose.Document {
     username: String;
     contacts: String[];
-    refreshToken: String;
+    refreshToken?: String;
     avatar?: String;
     email?: String;
     contactRequests: String[];
@@ -13,7 +13,7 @@ interface IUser extends mongoose.Document {
 const userSchema = new Schema<IUser>({
     username: { type: String, required: true },
     contacts: { type: [String] },
-    refreshToken: { type: String, required: true },
+    refreshToken: { type: String },
     avatar: String,
     email: String,
     contactRequests: { type: [String] },
