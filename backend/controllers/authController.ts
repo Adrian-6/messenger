@@ -70,9 +70,9 @@ const authWithGoogle = async (req: Express.Request, res: Express.Response) => {
         const idToken = data.id_token
         const userId = foundUser._id
         console.log('id token: ', idToken, 'userId: ', userId)
-        res.cookie('idToken', idToken, { secure: true, sameSite: 'none', maxAge: 24 * 60 * 60 * 1000 }) //24 hours
-        res.cookie('access_token', tokenFromGoogle, { secure: true, sameSite: 'none', maxAge: 24 * 60 * 60 * 1000 }) //24 hours
-        res.cookie('user_id', userId, {  secure: true, sameSite: 'none', maxAge: 30 * 24 * 60 * 60 * 1000 }) //1 month
+        res.cookie('idToken', idToken, { maxAge: 24 * 60 * 60 * 1000 }) //24 hours
+        res.cookie('access_token', tokenFromGoogle, {maxAge: 24 * 60 * 60 * 1000 }) //24 hours
+        res.cookie('user_id', userId, { maxAge: 30 * 24 * 60 * 60 * 1000 }) //1 month
         const { username, contacts, avatar, email, id } = foundUser
         console.log(foundUser)
         res.json(foundUser);
