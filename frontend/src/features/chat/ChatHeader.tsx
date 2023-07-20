@@ -8,7 +8,7 @@ const ChatHeader = (props: headerProps
 ) => {
     return (
         <div className="chat-header">
-            <a href="/" className="mobile" style={{ 'fontSize': 0 }}><ArrowBackIcon /></a>
+            <a href="/" className="mobile"><ArrowBackIcon /></a>
             <img className="contact-img header-img" src={props.avatar} alt="profile picture"
                 onError={({ currentTarget }) => {
                     currentTarget.onerror = null; // prevents looping

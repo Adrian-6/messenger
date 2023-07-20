@@ -361,6 +361,10 @@ label[for="chat"] {
   z-index: 1
 }
 
+.chat-header a {
+  font-size: 0;
+}
+
 .header-img {
   margin: 0px 5px;
 }
@@ -501,16 +505,12 @@ div.menu-notActive {
   padding: 0.3rem;
 }
 
-.mobile {
-  visibility: hidden;
-  width: 0;
-}
+
 
 @media screen and (width < 768px) {
 
-  .mobile {
-    visibility: visible;
-    width: fit-content
+  .desktop {
+    display: none;
   }
 
   .sidebar {
@@ -534,5 +534,11 @@ div.menu-notActive {
 
   .message {
     max-width: 85%;
+  }
+
+  @media screen and (width >=768px) {
+    .mobile {
+      display: none
+    }
   }
 }

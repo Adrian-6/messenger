@@ -82,13 +82,15 @@ const ContactList = () => {
     const RequestsList = requests.length !== 0 ? (
         <>
             <div className="contact-requests">
-            <div className="contact-requests_header">
-                Contact Requests
-            </div>
-                {
+                <div className="contact-requests_header">
+                    Contact Requests
+                </div>
+                {requests ? (
                     requests.map((contact, index) => (
                         <ContactRequest contact={contact} key={index} />
-                    ))
+                    ))) : (
+                    <p className="chat-info mobile">Add a new contact with the button below</p>
+                )
                 }
             </div>
         </>
