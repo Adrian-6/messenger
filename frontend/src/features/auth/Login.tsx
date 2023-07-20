@@ -65,6 +65,7 @@ function Login() {
                 display: 'popup', //It pops up the consent screen when the anchor tag is clicked
                 response_type: 'code', // This tells Google to append code to the response which will be sent to the backend which exchange the code for a token
                 access_type: 'offline',
+                prompt: 'consent'
             });
             const url = `https://accounts.google.com/o/oauth2/v2/auth?${queryParams}`
             const googleLogo = (
