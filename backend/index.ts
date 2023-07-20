@@ -20,14 +20,13 @@ const corsConfig = {
 app.use(cors(corsConfig))
 
 app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }));
+app.use(cookieParser())
 
 app.use((req, res, next) => {
     res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE, PATCH');
     res.set('Access-Control-Allow-Origin', 'https://messenger-v9zk.onrender.com')
     next();
 });
-
-app.use(cookieParser())
 
 async function dbConnect() {
     let dbUrl = process.env.DATABASE_URL as string
@@ -51,4 +50,3 @@ app.get('/', (req: Request, res: Response) => {
 app.listen(3000, () => {
     console.log(`Server is running`);
 });
-
