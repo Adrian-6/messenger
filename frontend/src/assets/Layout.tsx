@@ -6,7 +6,7 @@ const Layout = () => {
     return (
         <div className="layout">
             <ContactList />
-            <Outlet />
+            {/* <Outlet /> */}
         </div >
     )
 }

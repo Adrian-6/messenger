@@ -36,7 +36,6 @@ const AddContact = () => {
                     onChange={(e) => { setId(e.target.value) }} value={id}>
                 </input>
             </form>
-
         </div>
     )
 }

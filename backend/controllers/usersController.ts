@@ -11,48 +11,10 @@ interface TypedRequestBody<T> extends Express.Request {
 }
 const pusher = pusherServer
 
-const addUser = async (req: TypedRequestBody<{ username: string, password: string }>, res: Express.Response) => {
-    if (!req.body?.username || !req.body?.password) return res.status(400).json({ message: "username or password missing" })
-    const { username, password } = req.body
-    const duplicate = await User.findOne({ username }).lean().exec()
-    if (duplicate) {
-        return res.status(409).json({ message: "Account with this username already exists" })
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10)
-    const user = await User.create({ username, password: hashedPassword })
-
-    if (user) {
-        res.status(201).json({ message: "Account created" })
-    } else {
-        res.status(400).json({ message: "Invalid user data received" })
-    }
-}
-
-const deleteContact = async (req: TypedRequestBody<{ username: string, password: string }>, res: Express.Response) => {
-    if (!req.body?.username || !req.cookies.user_id) return res.status(400)
-
-    const targetUsername = req.body.username
-    const userId = req.cookies.user_id
-    const targetUser = await User.findById(userId).lean()
-    const foundUser = await User.findOne({ username: targetUsername }).lean()
-
-    if (!foundUser || !targetUser) return res.status(400).json({ message: "No user found" })
-
-    try {
-        foundUser.contacts.filter(contact => contact !== targetUser.id)
-        targetUser.contacts.filter(contact => contact !== foundUser.id)
-        return res.status(201)
-    } catch {
-        return res.status(400).json({ message: "Error occured, try again later" })
-    }
-}
-
 const getUser = async (req: TypedRequestBody<{ username: string }>, res: Express.Response) => {
 
-    if (!req.params.id) return res.status(400)
-
     const { id } = req.params
+    if (!req.params.id) return res.status(400)
 
     try {
         const foundUser = await User.findOne({ _id: id }, '-__v -refreshToken').lean()
@@ -143,7 +105,7 @@ const answerContactRequest = async (req: TypedRequestBody<{ id: string, response
 }
 
 export {
-    addUser, answerContactRequest, deleteContact,
+    answerContactRequest,
     getUser,
     sendContactRequest
 };

@@ -17,7 +17,6 @@ function App() {
     // this is called whenever new locations come in
     // the action is POP, PUSH, or REPLACE
     dispatch(setChattUrl());
-
   });
 
   return (
@@ -26,6 +25,7 @@ function App() {
         <Route index element={<Login />} />
         <Route path="google" element={<Login />} />
       </Route>
+      <Route path="/chat/test" element={<Layout />} />
       <Route element={<PersistCredentials />}>
         <Route path="/">
           <Route element={<Layout />}>

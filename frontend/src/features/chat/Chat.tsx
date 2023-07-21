@@ -1,6 +1,8 @@
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { IUser, IChat, IMessage } from "../../../..";
+import { IChat, IMessage, IUser } from "../../../..";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { pusherClient } from "../../app/pusherClient";
 import { Loading } from "../../assets/Loading";
@@ -10,8 +12,6 @@ import ChatHeader from "./ChatHeader";
 import ChatInput from "./ChatInput";
 import Message from "./Message";
 import { useGetChatMutation } from "./chatApiSlice";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { SerializedError } from "@reduxjs/toolkit";
 
 const Chat = () => {
 

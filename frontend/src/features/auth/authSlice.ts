@@ -47,5 +47,4 @@ export default authSlice.reducer
 export const { setCredentials, logOut, setChattUrl, pushNewContact } = authSlice.actions
 export const selectCurrentUser = (state: RootState) => state.authSlice
 export const selectCurrentUserId = (state: RootState) => state.authSlice.id
-export const selectCurrentUserRequests = (state: RootState) => state.authSlice.contactRequests
 export const selectChatUrl = (state: RootState) => state.authSlice.url;

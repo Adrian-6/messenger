@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IContact, IChat } from '../../../..';
+import { IChat, IContact } from '../../../..';
 
 interface newMessage {
     id: string;
@@ -51,22 +51,8 @@ export const chatApi = createApi({
                 body: { userId, body },
             }),
             invalidatesTags: ['Chat']
-        }),
-        createChat: builder.mutation({
-            query: ({ userIds, chatAdminId, chatName }) => ({
-                url: '/chat/new',
-                method: 'POST',
-                body: {
-                    userIds,
-                    chatAdminId,
-                    chatName
-                }
-            }),
-            invalidatesTags: [
-                { type: 'Chat', id: "LIST" }
-            ]
-        }),
+        })
     }),
 })
 
-export const { useGetChatMutation, useSendMessageMutation, useCreateChatMutation, useGetContactsQuery } = chatApi
+export const { useGetChatMutation, useSendMessageMutation, useGetContactsQuery } = chatApi

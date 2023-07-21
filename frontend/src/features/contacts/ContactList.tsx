@@ -1,28 +1,22 @@
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { IUser, IMessage } from '../../../../index'
+import { IContact } from '../../../../index'
 import { useAppSelector } from "../../app/hooks"
 import { pusherClient } from "../../app/pusherClient"
+import { Loading } from '../../assets/Loading'
 import { useGetUserInfoQuery, useSendLogoutMutation } from "../auth/authApiSlice"
 import { selectChatUrl, selectCurrentUser } from "../auth/authSlice"
 import { useGetContactsQuery } from "../chat/chatApiSlice"
 import AddContact from "../user/AddContact"
 import Contact from "./Contact"
 import ContactRequest from "./ContactRequest"
-import { Loading } from '../../assets/Loading'
-interface Icontact {
-    chatId: string,
-    id: string,
-    lastMessage: IMessage,
-    targetUser: IUser
-}
+
 
 const ContactList = () => {
 
     const currentUser = useAppSelector(state => selectCurrentUser(state))
     const chats: string[] | null = currentUser.contacts
-    const contactRequests: string[] | null = currentUser.contactRequests
     const pusher = pusherClient
     const navigate = useNavigate()
     const [requests, setRequests] = useState<string[]>([])
@@ -77,7 +71,7 @@ const ContactList = () => {
 
     let menuActive = active ? 'menu-active' : 'menu-notActive'
 
-    let contactsList: Icontact[] = []
+    let contactsList: IContact[] = []
 
     const RequestsList = requests.length !== 0 ? (
         <>
@@ -97,7 +91,7 @@ const ContactList = () => {
         : null
 
     if (contacts) {
-        Object.values(contacts as Icontact[]).forEach(function (chat: Icontact, index) {
+        Object.values(contacts as IContact[]).forEach(function (chat: IContact, index) {
             contactsList.push(chat)
         })
     }
@@ -111,8 +105,7 @@ const ContactList = () => {
                     return <Contact chatId={chat.chatId} lastMessage={chat.lastMessage} targetUser={chat.targetUser} key={index} />
                 }
             })
-        ) : <p className="chat-info mobile">Add a new contact using the button at the bottom</p>
-
+        ) : <p className="chat-info">Add a new contact using the button at the bottom</p>
 
     const isActiveMobile = (currentUrl === null || currentUrl === '' || currentUrl === '/') ? 'sidebar-active' : null
     if (!isLoading) {
